@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HeyTeaKay · Streamer.bot Shoutout Builder</title>
+<style>
+:root{--ink:#28304a;--muted:#69718a;--line:#c8cde0;--panel:#f8f8ff;--lav:#8c79bd;--lav2:#eee9fa;--pink:#f5e5f0;--blue:#e5effb;--white:#fff}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(135deg,#dce8f7,#f2e8f5 55%,#e8e8f8);font:15px/1.5 "Trebuchet MS",Arial,sans-serif;color:var(--ink);padding:28px 14px 48px}
+.shell{max-width:850px;margin:auto;background:#fff;border:1px solid #9aa7c6;border-radius:13px;overflow:hidden;box-shadow:0 16px 45px #4d527522}
+.topbar{background:linear-gradient(90deg,#6d83b7,#a18bc8);color:white;padding:18px 22px;display:flex;justify-content:space-between;align-items:center;gap:12px}.brand{font-weight:800;font-size:18px;letter-spacing:.2px}.tag{font-size:12px;background:#ffffff28;border:1px solid #ffffff55;border-radius:20px;padding:4px 10px;white-space:nowrap}
+main{padding:24px}.intro h1{font-size:27px;margin:0 0 5px}.intro p{color:var(--muted);margin:0 0 20px}.note{background:var(--blue);border:1px solid #c6d8ef;padding:12px 14px;border-radius:9px;margin:0 0 20px;font-size:13px}
+.section{border:1px solid var(--line);border-radius:10px;padding:17px;margin:16px 0;background:var(--panel)}.section h2{font-size:17px;margin:0 0 13px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}.field{display:flex;flex-direction:column;gap:5px}.field.full{grid-column:1/-1}label{font-weight:700;font-size:13px}input,textarea{width:100%;border:1px solid #b9bfd2;border-radius:7px;background:white;padding:10px 11px;font:inherit;color:var(--ink);outline-color:var(--lav)}textarea{min-height:82px;resize:vertical}.hint{font-size:11px;color:var(--muted)}.toggle{display:flex;gap:9px;align-items:center;margin:4px 0 12px;font-weight:700}.toggle input{width:auto}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}.btn{border:0;border-radius:8px;padding:11px 16px;font-weight:700;font-size:14px;cursor:pointer}.primary{background:linear-gradient(90deg,#7568a8,#9b80bb);color:white;box-shadow:0 3px 0 #594c86}.secondary{background:#eeeaf7;color:#51456f;border:1px solid #d2c9e5}.btn:disabled{opacity:.55;cursor:not-allowed}.status{margin-top:13px;padding:11px 13px;border-radius:8px;background:#edf6ef;border:1px solid #c9e1ce;color:#285b38;font-size:13px;display:none}.error{background:#fff0ef;border-color:#f0c7c2;color:#87372f}.fineprint{font-size:12px;color:var(--muted);margin-top:20px}.hidden{display:none!important}
+@media(max-width:620px){main{padding:17px}.grid{grid-template-columns:1fr}.field.full{grid-column:auto}.topbar{align-items:flex-start;flex-direction:column}.intro h1{font-size:23px}}
+</style></head>
+<body><div class="shell">
+<header class="topbar"><div class="brand">☕ HeyTeaKay's Streamer.bot Toolkit</div><div class="tag">Community Shoutout Builder · v1.0</div></header>
+<main>
+<div class="intro"><h1>Make your shoutouts yours!</h1><p>Fill in your details, generate your custom Streamer.bot import, and you're ready to set it up.</p></div>
+<div class="note"><strong>How it works:</strong> This page builds the import file in your browser. Your settings are not sent to HeyTeaKay or stored by this page. Download the file, then import it into Streamer.bot.</div>
+<form id="builder">
+<section class="section"><h2>① Your channel</h2><div class="grid"><div class="field full"><label for="channel">Your Twitch username</label><input id="channel" required value="HeyTeaKay" placeholder="yourusername"><span class="hint">The account name used by the shoutout actions. Don't include twitch.tv/.</span></div></div></section>
+<section class="section"><h2>② Your first team shoutout</h2><div class="grid">
+<div class="field"><label for="team1name">Team display name</label><input id="team1name" required value="Kindred Pixels"></div>
+<div class="field"><label for="team1slug">Team Twitch URL or slug</label><input id="team1slug" required value="kindredpixels" placeholder="https://www.twitch.tv/team/teamname"><span class="hint">Paste the team URL or just its final slug.</span></div>
+<div class="field full"><label for="team1msg">Shoutout message</label><textarea id="team1msg">✨ Pixel detected! @{{user}} is hanging out in chat! Go visit twitch.tv/{{user}} and show our fellow Pixel some love ♡</textarea><span class="hint">Use {{user}} wherever you want the chatter's Twitch username to appear.</span></div></div></section>
+<section class="section"><h2>③ Optional second team shoutout</h2><label class="toggle"><input type="checkbox" id="enable2" checked> Include a second team action</label>
+<div id="team2fields" class="grid"><div class="field"><label for="team2name">Team display name</label><input id="team2name" value="The Ghost Office"></div><div class="field"><label for="team2slug">Team Twitch URL or slug</label><input id="team2slug" value="theghostoffice"></div><div class="field full"><label for="team2msg">Shoutout message</label><textarea id="team2msg">👻 Another ghostie is here! @{{user}} from The Ghost Office is hanging out in chat! Go say hi at twitch.tv/{{user}} and show them some love!</textarea><span class="hint">Use {{user}} wherever you want the chatter's Twitch username to appear.</span></div></div></section>
+<section class="section"><h2>④ Cooldown</h2><div class="grid"><div class="field"><label for="cooldown">Cooldown (seconds)</label><input id="cooldown" type="number" min="0" max="3600" value="30" required><span class="hint">Checks the first 20 team memberships in every comparison and applies separately to each team action. The timer only updates after a matching team member gets a shoutout.</span></div></div></section>
+<div class="actions"><button class="btn primary" id="generate" type="submit">Generate & download import file</button><button class="btn secondary" type="button" id="preview">Preview settings</button></div>
+<div id="status" class="status" role="status"></div><div id="previewbox" class="note hidden" style="margin-top:14px"></div>
+</form>
+<p class="fineprint">Created by <strong>HeyTeaKay</strong>. This builder is an independent community tool. Always keep a backup of your existing Streamer.bot actions before importing a new file. The generated actions are based on the current HeyTeaKay template; test them in your own setup before relying on them live.</p>
+</main></div>
+<script>
+const TEMPLATE = {"meta":{"name":"HeyTeaKay Kindred Pixels + Ghost Office Shoutouts","author":"HeyTeaKay","version":"1.0.0","description":"","autoRunAction":null,"minimumVersion":null},"data":{"actions":[{"id":"cae877d3-710e-47e0-8838-275fa702843e","queue":"00000000-0000-0000-0000-000000000000","enabled":true,"excludeFromHistory":false,"excludeFromPending":false,"name":"kindred","group":"Keepies","alwaysRun":false,"randomAction":false,"concurrent":false,"triggers":[{"username":null,"isUserId":false,"id":"e7ae0f71-1e08-4e3a-8ad5-ab3ecb4b376f","type":120,"enabled":true,"exclusions":[]}],"subActions":[{"input":"%userName%","operation":7,"value":"HeyTeaKay","autoType":true,"subActions":[{"random":false,"subActions":[{"id":"8f58fbd9-fc11-4037-91d9-9af4ec3c6d4b","weight":0.0,"type":124,"parentId":"bf7ee974-73c1-470b-af24-6efe4e262e37","enabled":true,"index":0}],"id":"bf7ee974-73c1-470b-af24-6efe4e262e37","weight":0.0,"type":99901,"parentId":"9170b392-8a41-4aef-8692-ac51ded53a65","enabled":true,"index":0},{"random":false,"subActions":[],"id":"acfe5317-1b24-43ae-8d95-471a38c0968c","weight":0.0,"type":99902,"parentId":"9170b392-8a41-4aef-8692-ac51ded53a65","enabled":true,"index":1}],"id":"9170b392-8a41-4aef-8692-ac51ded53a65","weight":0.0,"type":120,"parentId":null,"enabled":true,"index":0},{"source":0,"variableName":"shoutoutTime","persisted":false,"destinationVariable":"shoutoutTime","defaultValue":0,"id":"d0dc73f1-55f3-4e1b-9893-098651ee92e8","weight":0.0,"type":121,"parentId":null,"enabled":true,"index":1},{"input":"$math(%unixtime% - %shoutoutTime%)$","operation":5,"value":"30","autoType":true,"subActions":[{"random":false,"subActions":[{"userLogin":"%user%","id":"eb73d26e-e4ff-40aa-bc42-bf2d3b2d8d49","weight":0.0,"type":52,"parentId":"e3403c0c-3fe3-4ab6-b877-45f04ad2b292","enabled":true,"index":0},{"userLogin":"%user%","id":"570e4dc9-ebbf-45e9-8991-a55bae170a43","weight":0.0,"type":50,"parentId":"e3403c0c-3fe3-4ab6-b877-45f04ad2b292","enabled":true,"index":1},{"input":"kindredpixels","autoType":false,"subActions":[{"caseSensitive":true,"values":["%teamName[0]%","%teamName[1]%","%teamName[2]%","%teamName[3]%","%teamName[4]%","%teamName[5]%","%teamName[6]%","%teamName[7]%","%teamName[8]%","%teamName[9]%","%teamName[10]%","%teamName[11]%","%teamName[12]%","%teamName[13]%","%teamName[14]%","%teamName[15]%","%teamName[16]%","%teamName[17]%","%teamName[18]%","%teamName[19]%"],"random":false,"subActions":[{"text":"✨ Pixel detected! @%userName% is hanging out in chat! Go visit twitch.tv/%userName% and show our fellow Pixel some love ♡","pin":false,"pinToStreamEnd":false,"useBot":true,"fallback":true,"id":"be43a01f-78e3-40b3-8401-d62c12a787ac","weight":0.0,"type":10,"parentId":"6baf2876-26f0-422b-abe7-4600975da925","enabled":true,"index":0},{"userLogin":"%user%","id":"0ce61222-1c3d-49e1-b411-a63751673f83","weight":0.0,"type":29,"parentId":"6baf2876-26f0-422b-abe7-4600975da925","enabled":true,"index":1},{"destination":0,"variableName":"shoutoutTime","persisted":false,"source":0,"value":"%unixtime%","autoType":true,"id":"5dc1c99c-e4b8-4b7e-83b6-88667293f3f2","weight":0.0,"type":122,"parentId":"6baf2876-26f0-422b-abe7-4600975da925","enabled":true,"index":2}],"id":"6baf2876-26f0-422b-abe7-4600975da925","weight":0.0,"type":99903,"parentId":"0d37473b-843a-4109-898f-24ba98e08f7c","enabled":true,"index":0},{"random":false,"subActions":[],"id":"6bca9ecb-bbb8-4fac-bb59-1cabc6eaa371","weight":0.0,"type":99904,"parentId":"0d37473b-843a-4109-898f-24ba98e08f7c","enabled":true,"index":2}],"id":"0d37473b-843a-4109-898f-24ba98e08f7c","weight":0.0,"type":127,"parentId":"e3403c0c-3fe3-4ab6-b877-45f04ad2b292","enabled":true,"index":2,"values":["%teamName[0]%","%teamName[1]%","%teamName[2]%","%teamName[3]%","%teamName[4]%","%teamName[5]%","%teamName[6]%","%teamName[7]%","%teamName[8]%","%teamName[9]%","%teamName[10]%","%teamName[11]%","%teamName[12]%","%teamName[13]%","%teamName[14]%","%teamName[15]%","%teamName[16]%","%teamName[17]%","%teamName[18]%","%teamName[19]%"]}],"id":"e3403c0c-3fe3-4ab6-b877-45f04ad2b292","weight":0.0,"type":99901,"parentId":"a6891db0-fd79-48f8-bac8-b17b7590adc8","enabled":true,"index":0},{"random":false,"subActions":[],"id":"4f8c3dfb-ef5a-4a39-b08b-2884e9967827","weight":0.0,"type":99902,"parentId":"a6891db0-fd79-48f8-bac8-b17b7590adc8","enabled":true,"index":1}],"id":"a6891db0-fd79-48f8-bac8-b17b7590adc8","weight":0.0,"type":120,"parentId":null,"enabled":true,"index":2}],"collapsedGroups":[]},{"id":"8d396f9a-6b28-4491-bb4d-5a88410caee8","queue":"00000000-0000-0000-0000-000000000000","enabled":true,"excludeFromHistory":false,"excludeFromPending":false,"name":"ghostoffice","group":"Keepies","alwaysRun":false,"randomAction":false,"concurrent":false,"triggers":[{"username":null,"isUserId":false,"id":"e4a53b8a-d4b2-4691-9aa4-764dc73c9c60","type":120,"enabled":true,"exclusions":[]}],"subActions":[{"input":"%userName%","operation":7,"value":"HeyTeaKay","autoType":true,"subActions":[{"random":false,"subActions":[{"id":"67f50216-c44e-4f59-af24-2fee2916855e","weight":0.0,"type":124,"parentId":"0a010e03-e5d8-4ac0-ae0a-35e3acae645d","enabled":true,"index":0}],"id":"0a010e03-e5d8-4ac0-ae0a-35e3acae645d","weight":0.0,"type":99901,"parentId":"9fec887e-faeb-443a-8365-540ff8e14b2f","enabled":true,"index":0},{"random":false,"subActions":[],"id":"c4e98936-d187-458c-bb79-dc6172e9cad1","weight":0.0,"type":99902,"parentId":"9fec887e-faeb-443a-8365-540ff8e14b2f","enabled":true,"index":1}],"id":"9fec887e-faeb-443a-8365-540ff8e14b2f","weight":0.0,"type":120,"parentId":null,"enabled":true,"index":0},{"source":0,"variableName":"ghostOfficeShoutoutTime","persisted":false,"destinationVariable":"ghostOfficeShoutoutTime","defaultValue":0,"id":"368f10a1-3874-4aff-8024-bc8c9019f156","weight":0.0,"type":121,"parentId":null,"enabled":true,"index":1},{"input":"$math(%unixtime% - %ghostOfficeShoutoutTime%)$","operation":5,"value":"30","autoType":true,"subActions":[{"random":false,"subActions":[{"userLogin":"%user%","id":"30a64baf-7e2b-48b8-9e79-38b4f11f80a2","weight":0.0,"type":52,"parentId":"2ad4013b-d571-4c5a-9ecc-63395c4c5cf0","enabled":true,"index":0},{"userLogin":"%user%","id":"98e3c4f8-201e-49c3-ac98-4f5bd8c1fced","weight":0.0,"type":50,"parentId":"2ad4013b-d571-4c5a-9ecc-63395c4c5cf0","enabled":true,"index":1},{"input":"theghostoffice","autoType":false,"subActions":[{"caseSensitive":true,"values":["%teamName[0]%","%teamName[1]%","%teamName[2]%","%teamName[3]%","%teamName[4]%","%teamName[5]%","%teamName[6]%","%teamName[7]%","%teamName[8]%","%teamName[9]%","%teamName[10]%","%teamName[11]%","%teamName[12]%","%teamName[13]%","%teamName[14]%","%teamName[15]%","%teamName[16]%","%teamName[17]%","%teamName[18]%","%teamName[19]%"],"random":false,"subActions":[{"text":"👻 Another ghostie is here! @%userName% from The Ghost Office is hanging out in chat! Go say hi at twitch.tv/%userName% and show them some love!","pin":false,"pinToStreamEnd":false,"useBot":true,"fallback":true,"id":"f5931944-9597-4e8f-bc8a-f234f0976617","weight":0.0,"type":10,"parentId":"dcdc3efe-fefa-4670-b594-694a80c3c292","enabled":true,"index":0},{"userLogin":"%user%","id":"2316ee2d-4e02-465a-8a67-f4b0a1b7ec8d","weight":0.0,"type":29,"parentId":"dcdc3efe-fefa-4670-b594-694a80c3c292","enabled":true,"index":1},{"destination":0,"variableName":"ghostOfficeShoutoutTime","persisted":false,"source":0,"value":"%unixtime%","autoType":true,"id":"a5cf0acf-3f0a-42e4-b5ff-e12b8962fd9b","weight":0.0,"type":122,"parentId":"dcdc3efe-fefa-4670-b594-694a80c3c292","enabled":true,"index":2}],"id":"dcdc3efe-fefa-4670-b594-694a80c3c292","weight":0.0,"type":99903,"parentId":"44d120e5-efa5-49e5-9081-c41fbf6e80d2","enabled":true,"index":0},{"random":false,"subActions":[],"id":"548c2cd4-ffef-4ce9-beb3-0bade79305fb","weight":0.0,"type":99904,"parentId":"44d120e5-efa5-49e5-9081-c41fbf6e80d2","enabled":true,"index":2}],"id":"44d120e5-efa5-49e5-9081-c41fbf6e80d2","weight":0.0,"type":127,"parentId":"2ad4013b-d571-4c5a-9ecc-63395c4c5cf0","enabled":true,"index":2,"values":["%teamName[0]%","%teamName[1]%","%teamName[2]%","%teamName[3]%","%teamName[4]%","%teamName[5]%","%teamName[6]%","%teamName[7]%","%teamName[8]%","%teamName[9]%","%teamName[10]%","%teamName[11]%","%teamName[12]%","%teamName[13]%","%teamName[14]%","%teamName[15]%","%teamName[16]%","%teamName[17]%","%teamName[18]%","%teamName[19]%"]}],"id":"2ad4013b-d571-4c5a-9ecc-63395c4c5cf0","weight":0.0,"type":99901,"parentId":"7b476b3b-6745-4f1a-87ed-63b5681c0704","enabled":true,"index":0},{"random":false,"subActions":[],"id":"2e6cfb60-fb45-49e2-b956-68202ef00f70","weight":0.0,"type":99902,"parentId":"7b476b3b-6745-4f1a-87ed-63b5681c0704","enabled":true,"index":1}],"id":"7b476b3b-6745-4f1a-87ed-63b5681c0704","weight":0.0,"type":120,"parentId":null,"enabled":true,"index":2}],"collapsedGroups":[]}],"queues":[],"commands":[],"websocketServers":[],"websocketClients":[],"timers":[]},"version":24,"exportedFrom":"1.0.7","minimumVersion":"1.0.0-alpha.1"};
+const $ = id => document.getElementById(id);
+$('enable2').addEventListener('change',()=> $('team2fields').classList.toggle('hidden',!$('enable2').checked));
+function teamSlug(raw){let s=raw.trim();try{if(/^https?:\/\//i.test(s)){const u=new URL(s);const p=u.pathname.split('/').filter(Boolean);s=p[p.length-1]||'';}}catch(e){}s=s.replace(/^@/,'').replace(/\/$/,'').toLowerCase();if(!/^[a-z0-9_]{1,25}$/.test(s))throw new Error('Please enter a valid Twitch team URL or slug (letters, numbers, underscores).');return s;}
+function cleanUsername(s){s=s.trim().replace(/^@/,'');if(!/^[a-zA-Z0-9_]{1,25}$/.test(s))throw new Error('Please enter a valid Twitch username.');return s;}
+function cleanMessage(s,team){if(!s.trim())throw new Error('Please enter a shoutout message for each enabled team.');return s.replaceAll('{{user}}','%userName%').replaceAll('{{team}}',team);}
+function clone(o){return JSON.parse(JSON.stringify(o));}
+function newGuid(){return (typeof crypto!=='undefined' && crypto.randomUUID) ? crypto.randomUUID() : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,c=>{const r=Math.random()*16|0;return (c==='x'?r:(r&3|8)).toString(16);});}
+function customizeAction(action, config, oldSlug, idx){
+  action.name='team_'+config.slug;
+  function walk(node){if(Array.isArray(node)){node.forEach(walk);return;}if(!node||typeof node!=='object')return;
+    if(node.input==='%userName%' && node.value==='HeyTeaKay') node.value=config.channel;
+    if(node.input===oldSlug) node.input=config.slug;
+    if(typeof node.text==='string' && node.text.includes('@%userName%')) node.text=config.message;
+    if(node.operation===5 && typeof node.input==='string' && node.input.includes('unixtime')) node.value=String(config.cooldown);
+    for(const v of Object.values(node))walk(v);
+  }
+  walk(action);
+  expandTeamSwitchCases(action);
+}
+function expandTeamSwitchCases(root){
+  const teamValues=Array.from({length:20},(_,i)=>`%teamName[${i}]%`);
+  function walk(node){
+    if(Array.isArray(node)){node.forEach(walk);return;}
+    if(!node || typeof node!=='object')return;
+    if(node.type===127 && Array.isArray(node.subActions) && Array.isArray(node.values) && node.values.some(v=>typeof v==='string' && /^%teamName\[\d+\]%$/.test(v))){
+      const templateCase=node.subActions.find(x=>x && x.type===99903 && Array.isArray(x.values));
+      const defaultCase=node.subActions.find(x=>x && x.type===99904);
+      if(templateCase){
+        const cases=teamValues.map((value,index)=>{
+          const copy=clone(templateCase);
+          const idMap=new Map();
+          (function collect(n){
+            if(Array.isArray(n)){n.forEach(collect);return;}
+            if(!n || typeof n!=='object')return;
+            if(typeof n.id==='string')idMap.set(n.id,newGuid());
+            for(const v of Object.values(n))collect(v);
+          })(copy);
+          (function remap(n){
+            if(Array.isArray(n)){n.forEach(remap);return;}
+            if(!n || typeof n!=='object')return;
+            if(typeof n.id==='string' && idMap.has(n.id))n.id=idMap.get(n.id);
+            if(typeof n.parentId==='string')n.parentId=idMap.get(n.parentId) || node.id;
+            for(const v of Object.values(n))remap(v);
+          })(copy);
+          copy.values=[value];
+          copy.parentId=node.id;
+          copy.index=index;
+          return copy;
+        });
+        node.values=teamValues.slice();
+        node.subActions=defaultCase ? [...cases, {...defaultCase,parentId:node.id,index:cases.length}] : cases;
+      }
+    }
+    for(const v of Object.values(node))walk(v);
+  }
+  walk(root);
+}
+function makeExport(){
+ const channel=cleanUsername($('channel').value);
+ const cooldown=Number($('cooldown').value);if(!Number.isInteger(cooldown)||cooldown<0||cooldown>3600)throw new Error('Cooldown must be a whole number between 0 and 3600 seconds.');
+ const configs=[{name:$('team1name').value.trim(),slug:teamSlug($('team1slug').value),message:cleanMessage($('team1msg').value,$('team1name').value.trim()),channel,cooldown,old:'kindredpixels'}];
+ if(!configs[0].name)throw new Error('Please enter the first team display name.');
+ if($('enable2').checked){const name=$('team2name').value.trim();if(!name)throw new Error('Please enter the second team display name.');configs.push({name,slug:teamSlug($('team2slug').value),message:cleanMessage($('team2msg').value,name),channel,cooldown,old:'theghostoffice'});}
+ if(new Set(configs.map(x=>x.slug)).size!==configs.length)throw new Error('Each team needs a different Twitch team slug.');
+ const out=clone(TEMPLATE);out.meta.name='HeyTeaKay Community Team Shoutouts';out.meta.author='HeyTeaKay';out.meta.version='1.0.0';
+ out.meta.description='Created by HeyTeaKay';
+ out.data.actions=out.data.actions.slice(0,configs.length);
+ configs.forEach((c,i)=>customizeAction(out.data.actions[i],c,c.old,i));
+ return {out,configs,channel};
+}
+async function encodeSBAE(obj){if(!('CompressionStream' in window))throw new Error('This browser does not support the built-in gzip export. Please use a recent version of Chrome, Edge, or Firefox.');
+ const raw=new TextEncoder().encode(JSON.stringify(obj));const stream=new Blob([raw]).stream().pipeThrough(new CompressionStream('gzip'));const gz=new Uint8Array(await new Response(stream).arrayBuffer());const all=new Uint8Array(4+gz.length);all.set([83,66,65,69],0);all.set(gz,4);
+ let binary='';const chunk=0x8000;for(let i=0;i<all.length;i+=chunk)binary+=String.fromCharCode(...all.subarray(i,Math.min(i+chunk,all.length)));return btoa(binary);
+}
+$('builder').addEventListener('submit',async e=>{e.preventDefault();const status=$('status');status.style.display='block';status.className='status';status.textContent='Building your Streamer.bot import…';$('generate').disabled=true;
+ try{const {out,configs,channel}=makeExport();const encoded=await encodeSBAE(out);const blob=new Blob([encoded],{type:'text/plain;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='HeyTeaKay_Shoutouts_'+channel+'.txt';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1500);status.textContent='Your import file has been downloaded. In Streamer.bot, use Import Actions and select the downloaded .txt file. The file contains '+configs.length+' team action(s).';
+ }catch(err){status.className='status error';status.textContent=err.message||'Something went wrong while creating the import.';}finally{$('generate').disabled=false;}
+});
+$('preview').addEventListener('click',()=>{try{const {configs,channel}=makeExport();$('previewbox').classList.remove('hidden');$('previewbox').innerHTML='<strong>Preview</strong><br>Channel: '+escapeHtml(channel)+'<br>Team actions: '+configs.map(c=>escapeHtml(c.name)+' ('+escapeHtml(c.slug)+')').join(', ')+'<br>Cooldown: '+configs[0].cooldown+' seconds each<br>Creator credit: HeyTeaKay';}catch(e){const p=$('previewbox');p.classList.remove('hidden');p.textContent=e.message;}});
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+</script></body></html>
